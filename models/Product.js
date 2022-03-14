@@ -17,6 +17,14 @@ const productSchema = new mongoose.Schema(
       required: [true, "Product price is required"],
       maxLength: [8, "Product price must be less than 10 characters long"],
     },
+    sgstTax: {
+      type: Number,
+      default: 0,
+    },
+    cgstTax: {
+      type: Number,
+      default: 0,
+    },
     rating: {
       type: Number,
       default: 0,

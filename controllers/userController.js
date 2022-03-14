@@ -173,6 +173,91 @@ const resetPassword = async (req, res, next) => {
   });
 };
 
+// Add Address
+const addNewAddress = async (req, res, next) => {
+  const user = await User.findById(req.params.id);
+
+  if (!user) {
+    return next(new Error("User not found"));
+  }
+
+  const address = { ...req.body };
+  user.addresses.push(address);
+  await user.save();
+  res.status(StatusCodes.CREATED).json({
+    success: true,
+    message: "Address added successfully",
+    address,
+  });
+};
+
+// Delete Address
+const deleteAddress = async function (req, res, next) {
+  const user = await User.findById(req.params.id);
+
+  if (!user) {
+    return next(new Error("User not found"));
+  }
+
+  const address = user.addresses.id(req.query.mid);
+
+  if (!address) {
+    return next(new Error("Address not found"));
+  }
+
+  address.remove();
+  await user.save();
+  res.status(StatusCodes.OK).json({
+    success: true,
+    message: "Address deleted successfully",
+  });
+};
+
+// Update Address
+const updateAddress = async function (req, res, next) {
+  const user = await User.findById(req.params.id);
+
+  if (!user) {
+    return next(new Error("User not found"));
+  }
+
+  const address = user.addresses.id(req.query.mid);
+
+  if (!address) {
+    return next(new Error("Address not found"));
+  }
+
+  for (let key in req.body) {
+    address[key] = req.body[key];
+  }
+
+  await user.save();
+  res.status(StatusCodes.OK).json({
+    success: true,
+    message: "Address updated successfully",
+  });
+};
+
+// Get Address
+const getAddress = async (req, res, next) => {
+  const user = await User.findById(req.params.id);
+
+  if (!user) {
+    return next(new Error("User not found"));
+  }
+
+  const address = user.addresses.id(req.query.mid);
+
+  if (!address) {
+    return next(new Error("Address not found"));
+  }
+
+  res.status(StatusCodes.OK).json({
+    success: true,
+    address,
+  });
+}
+
 // Admin Only
 
 // Get user
@@ -202,13 +287,14 @@ const updateUserRole = async (req, res, next) => {
   });
 };
 
-const getAllUsers=async function(req,res){
-  const users=await User.find({});
+const getAllUsers = async function (req, res) {
+  const users = await User.find({});
   res.status(StatusCodes.OK).json({
     success: true,
     users,
   });
-}
+};
+
 module.exports = {
   getUserDetails,
   registerUser,
@@ -217,5 +303,9 @@ module.exports = {
   forgotPassword,
   resetPassword,
   updateUserRole,
-  getAllUsers
+  getAllUsers,
+  addNewAddress,
+  deleteAddress,
+  updateAddress,
+  getAddress,
 };

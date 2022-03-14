@@ -20,6 +20,7 @@ const notFound = require("./routes/notFound");
 const errorMiddleware = require("./middleware/errorMiddleware");
 
 const user = require("./routes/userRoute");
+const product = require("./routes/productRoute");
 
 app.use(cookieParser());
 app.use(express.json());
@@ -30,6 +31,8 @@ app.get("/", function (req, res) {
 });
 
 app.use("/api/v1/user", user);
+app.use("/api/v1/product", product);
+
 
 app.use(notFound);
 app.use(errorMiddleware);
