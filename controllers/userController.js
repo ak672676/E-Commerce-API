@@ -2,7 +2,7 @@ const { StatusCodes } = require("http-status-codes");
 const cloudinary = require("cloudinary");
 const crypto = require("crypto");
 const User = require("../models/User");
-const res = require("express/lib/response");
+// const res = require("express/lib/response");
 const { sendMail } = require("../utils/sendEmail");
 
 // Register a user

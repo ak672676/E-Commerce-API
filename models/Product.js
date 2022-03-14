@@ -64,17 +64,12 @@ const productSchema = new mongoose.Schema(
           ref: "User",
           required: true,
         },
-        name: {
-          type: String,
-          required: true,
-        },
         rating: {
           type: Number,
           required: true,
         },
         comment: {
           type: String,
-          required: true,
         },
       },
     ],

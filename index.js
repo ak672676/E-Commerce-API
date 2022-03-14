@@ -14,24 +14,29 @@ cloudinary.config({
   api_key: process.env.CLOUDINARY_API_KEY,
   api_secret: process.env.CLOUDINARY_API_SECRET,
 });
-
+const cors= require("cors");
 const connectDB = require("./utils/dbConnect");
 const notFound = require("./routes/notFound");
 const errorMiddleware = require("./middleware/errorMiddleware");
 
 const user = require("./routes/userRoute");
 const product = require("./routes/productRoute");
+const payment= require("./routes/paymentRoute");
 
 app.use(cookieParser());
 app.use(express.json());
 app.use(express.urlencoded({ extended: true }));
+app.use(cors());
 
 app.get("/", function (req, res) {
+  console.log("Hello");
   res.send("Hello World!");
 });
 
 app.use("/api/v1/user", user);
 app.use("/api/v1/product", product);
+app.use("/api/v1/payment", payment);
+
 
 
 app.use(notFound);
