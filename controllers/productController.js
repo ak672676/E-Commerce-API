@@ -1,5 +1,6 @@
 const { StatusCodes } = require("http-status-codes");
 const Product = require("../models/Product");
+const User = require("../models/User");
 
 // Admin Routes
 
@@ -32,6 +33,10 @@ const getAllProductAdmin = async (req, res, next) => {
 const getProductDetailsAdmin = async (req, res) => {
   const product = await Product.findById(req.params.id);
 
+  // for (let i = 0; i < product.reviews.length; i++) {
+  //   const user = await User.findById(product.reviews[i].user);
+  //   product.reviews[i].name = "Anonymous";
+  // }
   res.status(StatusCodes.OK).json({
     success: true,
     message: "Product Details",
